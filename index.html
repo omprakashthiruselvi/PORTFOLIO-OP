@@ -29,6 +29,7 @@
             background-color: #030712;
             color: #f3f4f6;
             overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
         }
 
         h1, h2, h3, h4, h5, .font-poppins {
@@ -49,6 +50,7 @@
             z-index: -1;
             opacity: 0.65;
             pointer-events: none;
+            transition: filter 0.5s ease, opacity 0.5s ease;
         }
 
         /* Glassmorphism Utilities */
@@ -81,11 +83,18 @@
             background-clip: text;
         }
 
-        .text-gradient-green {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        /* 3D Transform Utilities for Photo */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .transform-style-3d {
+            transform-style: preserve-3d;
+        }
+        .rotate-3d-hover {
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.6s ease;
+        }
+        .group:hover .rotate-3d-hover {
+            transform: rotateY(-12deg) rotateX(8deg) scale3d(1.02, 1.02, 1.02);
         }
 
         /* Scroll Reveal Animation Classes */
@@ -101,21 +110,12 @@
         }
 
         /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #030712; 
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1f2937; 
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary); 
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #030712; }
+        ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
         
-        /* Floating Animation for Header Image */
+        /* Floating Animation */
         @keyframes float {
             0% { transform: translateY(0px) rotate(0deg); }
             50% { transform: translateY(-12px) rotate(1deg); }
@@ -148,31 +148,13 @@
             animation: shimmer 1.25s ease-in-out;
         }
 
-        /* Springy Pop-Up Hover Animation for Navigation Links */
+        /* Springy Pop-Up Hover Animation */
         .nav-link-pop {
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.2s ease;
         }
         .nav-link-pop:hover {
             transform: translateY(-4px) scale(1.08);
             text-shadow: 0 0 10px rgba(14, 165, 233, 0.4);
-        }
-
-        /* 3D Square Card Effects */
-        .perspective-1000 {
-            perspective: 1200px;
-        }
-        .transform-style-3d {
-            transform-style: preserve-3d;
-        }
-        .rotate-3d-hover {
-            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-            transform: rotateY(0deg) rotateX(0deg);
-        }
-        .group:hover .rotate-3d-hover {
-            transform: rotateY(-12deg) rotateX(8deg);
-        }
-        .translate-z-40 {
-            transform: translateZ(40px);
         }
     </style>
 </head>
@@ -186,13 +168,13 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <div class="flex-shrink-0 cursor-pointer">
-                    <a href="#home" class="text-2xl font-bold font-poppins text-white tracking-wider flex items-center gap-2">
-                        <span class="p-2 bg-gradient-to-tr from-sky-500 to-violet-600 rounded-lg text-white font-black text-xl leading-none">O</span>
+                    <a href="#home" class="text-xl sm:text-2xl font-bold font-poppins text-white tracking-wider flex items-center gap-2">
+                        <span class="p-1.5 sm:p-2 bg-gradient-to-tr from-sky-500 to-violet-600 rounded-lg text-white font-black text-lg sm:text-xl leading-none">O</span>
                         OMPRAKASH<span class="text-sky-500 font-black">T</span>
                     </a>
                 </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-center space-x-6">
+                <div class="hidden lg:flex flex-1 justify-end pr-6 xl:pr-12">
+                    <div class="flex items-center space-x-6 lg:space-x-8">
                         <a href="#home" class="nav-link-pop relative hover:text-sky-400 px-3 py-2 rounded-md text-sm font-medium transition-colors group flex flex-col items-center">
                             Home
                             <span class="absolute bottom-0 w-0 h-0.5 bg-gradient-to-r from-sky-400 to-violet-500 transition-all duration-300 group-hover:w-full"></span>
@@ -216,16 +198,18 @@
                         <a href="#contact" class="bg-gradient-to-r from-sky-500 to-violet-600 hover:from-sky-400 hover:to-violet-500 text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all shadow-[0_0_15px_rgba(14,165,233,0.4)] shimmer-btn nav-link-pop">Contact Me</a>
                     </div>
                 </div>
-                <!-- Mobile menu button -->
-                <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none p-2">
-                        <i class="fas fa-bars text-2xl"></i>
-                    </button>
+                <!-- Mobile Menu Button -->
+                <div class="flex items-center gap-2 sm:gap-4">
+                    <div class="lg:hidden flex items-center">
+                        <button id="mobile-menu-btn" class="text-gray-300 hover:text-sky-400 focus:outline-none p-2 transition-colors">
+                            <i class="fas fa-bars text-2xl"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden glass absolute w-full flex flex-col space-y-2 px-6 pt-2 pb-6 border-t border-gray-800">
+        <div id="mobile-menu" class="hidden lg:hidden glass absolute w-full flex flex-col space-y-2 px-6 pt-2 pb-6 border-t border-gray-800">
             <a href="#home" class="block hover:text-sky-400 px-3 py-2.5 rounded-md text-base font-medium mobile-link border-b border-gray-900">Home</a>
             <a href="#about" class="block hover:text-sky-400 px-3 py-2.5 rounded-md text-base font-medium mobile-link border-b border-gray-900">About</a>
             <a href="#skills" class="block hover:text-sky-400 px-3 py-2.5 rounded-md text-base font-medium mobile-link border-b border-gray-900">Skills</a>
@@ -236,17 +220,19 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="min-h-screen flex items-center justify-center pt-20 relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col-reverse md:flex-row items-center relative z-10 gap-12 w-full">
-            <div class="w-full md:w-3/5 text-center md:text-left reveal">
+    <section id="home" class="min-h-screen flex items-center justify-center pt-32 pb-10 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col-reverse md:flex-row items-center justify-center relative z-10 gap-10 md:gap-12 w-full">
+            
+            <!-- Hero Text Content -->
+            <div class="w-full md:w-3/5 text-center md:text-left reveal flex flex-col items-center md:items-start">
                 <div class="inline-flex items-center gap-2 px-3 py-1 bg-sky-950/40 border border-sky-800/60 rounded-full text-sky-400 font-mono text-xs sm:text-sm mb-4">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                     Available for MERN Stack & IT Roles
                 </div>
-                <h1 class="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight mb-4">
+                <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-4">
                     Hi, I am <span class="text-gradient">Omprakash T</span>
                 </h1>
-                <h2 class="text-xl sm:text-2xl md:text-3xl text-gray-300 font-semibold mb-6 flex flex-wrap justify-center md:justify-start gap-2">
+                <h2 class="text-lg sm:text-2xl md:text-3xl text-gray-300 font-semibold mb-6 flex flex-wrap justify-center md:justify-start gap-2">
                     <span>MERN Stack Developer</span> 
                     <span class="text-sky-500">|</span> 
                     <span class="text-violet-400">IT Student</span>
@@ -254,59 +240,66 @@
                 <p class="mt-4 max-w-2xl text-base sm:text-lg text-gray-400 mb-8 mx-auto md:mx-0 leading-relaxed">
                     A highly motivated final-year Information Technology student (8.82 CGPA) and Full-Stack Developer specializing in high-performance web applications, modern databases, and clean UI engineering.
                 </p>
-                <div class="flex flex-wrap gap-4 justify-center md:justify-start">
-                    <a href="#projects" class="px-8 py-3.5 bg-gradient-to-r from-sky-500 to-violet-600 hover:from-sky-400 hover:to-violet-500 text-white rounded-full font-semibold transition-all shadow-[0_0_20px_rgba(14,165,233,0.4)] flex items-center gap-2 transform hover:scale-[1.02] active:scale-[0.98] shimmer-btn">
+                <div class="flex flex-wrap gap-4 justify-center md:justify-start w-full">
+                    <a href="#projects" class="px-6 sm:px-8 py-3.5 bg-gradient-to-r from-sky-500 to-violet-600 hover:from-sky-400 hover:to-violet-500 text-white rounded-full font-semibold transition-all shadow-[0_0_20px_rgba(14,165,233,0.4)] flex items-center gap-2 transform hover:scale-[1.02] active:scale-[0.98] shimmer-btn">
                         View Projects <i class="fas fa-arrow-right text-sm"></i>
                     </a>
-                    <a href="#certifications" class="px-8 py-3.5 bg-slate-900/60 hover:bg-slate-800/80 border border-gray-700 hover:border-sky-500/50 text-gray-200 hover:text-white rounded-full font-semibold transition-all flex items-center gap-2 transform hover:scale-[1.02] active:scale-[0.98]">
+                    <a href="#certifications" class="px-6 sm:px-8 py-3.5 bg-slate-900/60 hover:bg-slate-800/80 border border-gray-700 hover:border-sky-500/50 text-gray-200 hover:text-white rounded-full font-semibold transition-all flex items-center gap-2 transform hover:scale-[1.02] active:scale-[0.98]">
                         <i class="fas fa-certificate text-yellow-500"></i> View Certificates
                     </a>
                 </div>
-                <div class="mt-12 flex gap-6 justify-center md:justify-start items-center">
-                    <span class="text-xs font-mono text-green-500 uppercase tracking-wider">Connect with me :</span>
-                    <a href="https://github.com/omprakashthiruselvi" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white hover:-translate-y-1 transition-all text-2xl" title="GitHub Profile"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/omprakash-t-b28543358" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-sky-400 hover:-translate-y-1 transition-all text-2xl" title="LinkedIn Connection"><i class="fab fa-linkedin"></i></a>
-                    <a href="mailto:omprakashtamilarasan@gmail.com" class="text-gray-400 hover:text-red-400 hover:-translate-y-1 transition-all text-2xl" title="Send Email"><i class="fas fa-envelope"></i></a>
-                    <a href="tel:+919025414413" class="text-gray-400 hover:text-green-400 hover:-translate-y-1 transition-all text-xl" title="Direct Call"><i class="fas fa-phone-alt"></i></a>
+                <div class="mt-10 sm:mt-12 flex gap-4 sm:gap-5 justify-center md:justify-start items-center flex-wrap max-w-sm sm:max-w-none">
+                    <span class="text-xs font-mono text-green-400 uppercase tracking-wider w-full md:w-auto text-center md:text-left mb-2 md:mb-0">Connect with me:</span>
+                    <a href="https://github.com/omprakashthiruselvi" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-white hover:-translate-y-1 transition-all text-2xl drop-shadow-[0_0_5px_rgba(255,255,255,0.2)]" title="GitHub Profile"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/omprakash-t-b28543358" target="_blank" rel="noopener noreferrer" class="text-[#0a66c2] hover:text-[#004182] hover:-translate-y-1 transition-all text-2xl drop-shadow-[0_0_5px_rgba(10,102,194,0.4)]" title="LinkedIn Connection"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:omprakashtamilarasan@gmail.com" class="text-[#ea4335] hover:text-[#c5221f] hover:-translate-y-1 transition-all text-2xl drop-shadow-[0_0_5px_rgba(234,67,53,0.4)]" title="Send Email"><i class="fas fa-envelope"></i></a>
+                    <a href="tel:+919025414413" class="text-[#10b981] hover:text-[#059669] hover:-translate-y-1 transition-all text-xl drop-shadow-[0_0_5px_rgba(16,185,129,0.4)]" title="Direct Call"><i class="fas fa-phone-alt"></i></a>
+                    <a href="https://wa.me/919025414413?text=Hello%20Omprakash" target="_blank" rel="noopener noreferrer" class="text-[#25d366] hover:text-[#128c7e] hover:-translate-y-1 transition-all text-2xl drop-shadow-[0_0_5px_rgba(37,211,102,0.4)]" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
             
-            <div class="w-full md:w-2/5 flex justify-center reveal">
-                <div class="relative w-[200px] h-[266px] sm:w-[250px] sm:h-[333px] lg:w-[280px] lg:h-[373px] animate-float group perspective-1000">
+            <!-- 3D Passport Photo Section -->
+            <div class="w-full md:w-2/5 flex justify-center reveal mt-6 md:mt-0">
+                <!-- Dimension container perfectly scaled for 3:4 passport ratio, smaller as requested -->
+                <div class="relative w-[180px] h-[240px] sm:w-[220px] sm:h-[293px] lg:w-[250px] lg:h-[333px] animate-float group perspective-1000 mt-4 md:mt-0">
+                    
                     <!-- Abstract glowing sphere backdrop representing depth -->
                     <div class="absolute inset-0 bg-gradient-to-tr from-sky-500 via-violet-600 to-purple-600 rounded-xl blur-[40px] opacity-60 group-hover:opacity-100 transition-opacity duration-500"></div>
                     
                     <!-- Portrait Wrapper with 3D Passport Photo Shape & Glowing Effects -->
                     <div class="relative w-full h-full p-[4px] bg-gradient-to-br from-sky-400 via-violet-500 to-purple-600 shadow-[0_0_30px_rgba(14,165,233,0.4)] rounded-xl transition-all duration-500 group-hover:shadow-[0_0_60px_rgba(139,92,246,0.7)] transform-style-3d rotate-3d-hover">
+                        
                         <!-- Passport Frame -->
                         <div class="w-full h-full bg-black rounded-lg overflow-hidden relative flex flex-col justify-center items-center">
+                            
                             <!-- Passport size image fitting perfectly into the frame -->
                             <img id="profile-pic" class="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.08] opacity-0" alt="Omprakash T Portrait">
                             
                             <!-- Dynamic Backup SVG Avatar shown only if the image fails to load -->
-                            <div id="avatar-fallback" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-black p-6 text-center">
+                            <div id="avatar-fallback" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-[#050b14] p-6 text-center">
                                 <svg class="w-24 h-24 text-sky-400 mb-3" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="50" cy="35" r="20" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="2.5"/>
                                     <path d="M15 82C15 65.4315 28.4315 52 45 52H55C71.5685 52 85 65.4315 85 82" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                                    <path d="M35 32L42 39L65 24" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="animate-pulse"/>
                                 </svg>
-                                <span class="text-xs font-mono text-gray-400 uppercase tracking-widest">Omprakash T</span>
+                                <span class="text-xs font-mono text-gray-400 uppercase tracking-widest">Omprakash</span>
                             </div>
 
-                            <!-- 3D Glass Glare Overlay -->
-                            <div class="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-10"></div>
+                            <!-- Animated scanner overlay line -->
+                            <div class="absolute inset-x-0 h-[2px] bg-sky-500/80 shadow-[0_0_10px_#0ea5e9] top-0 animate-[bounce_5s_infinite_ease-in-out]"></div>
                         </div>
-
-                        <!-- Floating Orbiting Tech Badges adjusted for 3D passport border -->
-                        <div class="absolute -top-4 -right-4 glass-card p-3 rounded-lg text-blue-400 text-2xl z-20 shadow-[0_10px_20px_rgba(0,0,0,0.6)] translate-z-40 transition-transform duration-500" title="React Engine"><i class="fab fa-react animate-[spin_12s_linear_infinite]"></i></div>
-                        <div class="absolute -bottom-4 -left-4 glass-card p-3 rounded-lg text-yellow-400 text-2xl z-20 shadow-[0_10px_20px_rgba(0,0,0,0.6)] translate-z-40 transition-transform duration-500" title="Modern JS"><i class="fab fa-js"></i></div>
-                        <div class="absolute top-1/2 -right-5 glass-card p-3 rounded-lg text-green-500 text-2xl z-20 shadow-[0_10px_20px_rgba(0,0,0,0.6)] translate-z-40 transition-transform duration-500" title="NodeJS Runtime"><i class="fab fa-node-js"></i></div>
                     </div>
+
+                    <!-- Floating Orbiting Tech Badges popping out in 3D -->
+                    <div class="absolute -top-4 -right-4 glass-card p-3 rounded-full text-blue-400 text-xl sm:text-2xl z-20 shadow-lg transform translate-z-10 transition-transform group-hover:translate-z-20" title="React Engine"><i class="fab fa-react animate-[spin_12s_linear_infinite]"></i></div>
+                    <div class="absolute -bottom-4 -left-4 glass-card p-3 rounded-full text-yellow-400 text-xl sm:text-2xl z-20 shadow-lg transform translate-z-10 transition-transform group-hover:translate-z-20" title="Modern JS"><i class="fab fa-js"></i></div>
+                    <div class="absolute top-1/2 -right-6 glass-card p-3 rounded-full text-green-500 text-xl sm:text-2xl z-20 shadow-lg transform translate-z-10 transition-transform group-hover:translate-z-20" title="NodeJS Runtime"><i class="fab fa-node-js"></i></div>
                 </div>
             </div>
         </div>
         
         <!-- Scroll Down Indicator -->
-        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 animate-bounce hidden sm:block">
             <a href="#about" class="text-gray-400 hover:text-sky-400 transition-colors" aria-label="Scroll Down to About">
                 <i class="fas fa-chevron-down text-2xl"></i>
             </a>
@@ -314,9 +307,9 @@
     </section>
 
     <!-- About & Education Section -->
-    <section id="about" class="py-28 relative z-10">
+    <section id="about" class="py-20 sm:py-28 relative z-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-20 reveal">
+            <div class="text-center mb-16 sm:mb-20 reveal">
                 <h2 class="text-sm text-sky-400 font-mono tracking-widest uppercase mb-2">My Background</h2>
                 <h3 class="text-3xl md:text-5xl font-bold">About & Education</h3>
                 <div class="w-24 h-1.5 bg-gradient-to-r from-sky-500 via-indigo-500 to-violet-500 mx-auto mt-4 rounded-full"></div>
@@ -324,19 +317,19 @@
             
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
                 <!-- Profile / Biography Card -->
-                <div class="glass-card p-8 sm:p-10 rounded-2xl reveal flex flex-col h-full relative overflow-hidden">
+                <div class="glass-card p-6 sm:p-10 rounded-2xl reveal flex flex-col h-full relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-sky-500/5 rounded-full blur-2xl"></div>
                     <div class="flex items-center gap-4 mb-6">
                         <div class="w-14 h-14 rounded-2xl bg-sky-500/15 flex items-center justify-center text-sky-400 text-2xl border border-sky-500/20">
                             <i class="fas fa-user-tie"></i>
                         </div>
                         <div>
-                            <h4 class="text-2xl font-bold text-white">Professional Profile</h4>
+                            <h4 class="text-xl sm:text-2xl font-bold text-white">Professional Profile</h4>
                             <p class="text-xs text-sky-400 font-mono">Full-Stack Solutionist</p>
                         </div>
                     </div>
                     
-                    <div class="space-y-4 text-gray-300 leading-relaxed text-base">
+                    <div class="space-y-4 text-gray-300 leading-relaxed text-sm sm:text-base">
                         <p>
                             I am a final-year B.Tech Information Technology student at <strong class="text-white">Hindusthan College of Engineering and Technology, Coimbatore</strong>, maintaining an excellent academic record with a current <strong class="text-sky-400">8.82 CGPA</strong>.
                         </p>
@@ -369,61 +362,66 @@
                         <!-- B.Tech Higher Education -->
                         <div class="relative pl-12 group">
                             <div class="absolute left-3.5 top-1.5 flex items-center justify-center w-3.5 h-3.5 rounded-full bg-sky-500 ring-4 ring-sky-950/80 z-10 group-hover:scale-125 transition-transform duration-300"></div>
-                            <div class="glass-card p-6 rounded-xl relative">
+                            <div class="glass-card p-5 sm:p-6 rounded-xl relative">
                                 <div class="flex flex-wrap justify-between items-start gap-2 mb-2">
                                     <span class="text-sky-400 font-mono text-xs font-semibold px-2 py-1 bg-sky-950/60 rounded border border-sky-800/50">2023 - PRESENT</span>
-                                    <span class="text-xs text-sky-300 font-mono bg-sky-950/40 px-2.5 py-1 rounded-md border border-sky-800/40"><i class="fas fa-map-marker-alt text-sky-400 mr-1"></i> Coimbatore, TN</span>
+                                    <!-- Colored Location Text -->
+                                    <span class="text-xs text-sky-300 font-bold font-mono bg-sky-900/30 px-2 py-0.5 rounded"><i class="fas fa-map-marker-alt mr-1"></i> Coimbatore, TN</span>
                                 </div>
                                 <h5 class="text-lg font-bold text-white">B.Tech in Information Technology</h5>
                                 <p class="text-sm text-gray-400 mt-1">Hindusthan College of Engineering and Technology</p>
                                 <div class="mt-3 flex items-center justify-between flex-wrap gap-2">
                                     <span class="text-xs font-semibold text-emerald-400 bg-emerald-950/50 px-2.5 py-1 rounded-full border border-emerald-800/40">Current CGPA: 8.82</span>
-                                    <span class="text-xs font-bold text-amber-300 font-mono bg-amber-950/50 px-2.5 py-1 rounded-md border border-amber-700/50 shadow-[0_0_10px_rgba(251,191,36,0.15)] flex items-center"><i class="fas fa-star text-amber-400 mr-1.5 animate-pulse"></i> FINAL YEAR</span>
+                                    <!-- Glowing Final Year Tag -->
+                                    <span class="text-xs font-bold font-mono text-amber-400 bg-amber-950/40 px-2.5 py-1 rounded-md border border-amber-500/50 drop-shadow-[0_0_5px_rgba(251,191,36,0.8)] animate-pulse">FINAL YEAR</span>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Higher Secondary Education -->
-                <div class="relative pl-12 group">
-                    <div class="absolute left-3.5 top-1.5 flex items-center justify-center w-3.5 h-3.5 rounded-full bg-violet-500 ring-4 ring-violet-950/80 z-10 group-hover:scale-125 transition-transform duration-300"></div>
-                    <div class="glass-card p-6 rounded-xl">
-                        <div class="flex flex-wrap justify-between items-start gap-2 mb-2">
-                            <span class="text-violet-400 font-mono text-xs font-semibold px-2 py-1 bg-violet-950/60 rounded border border-violet-800/50">2022 - 2023</span>
-                            <span class="text-xs text-violet-300 font-mono bg-violet-950/40 px-2.5 py-1 rounded-md border border-violet-800/40"><i class="fas fa-map-marker-alt text-violet-400 mr-1"></i> Salem, TN</span>
+                        <div class="relative pl-12 group">
+                            <div class="absolute left-3.5 top-1.5 flex items-center justify-center w-3.5 h-3.5 rounded-full bg-violet-500 ring-4 ring-violet-950/80 z-10 group-hover:scale-125 transition-transform duration-300"></div>
+                            <div class="glass-card p-5 sm:p-6 rounded-xl">
+                                <div class="flex flex-wrap justify-between items-start gap-2 mb-2">
+                                    <span class="text-violet-400 font-mono text-xs font-semibold px-2 py-1 bg-violet-950/60 rounded border border-violet-800/50">2022 - 2023</span>
+                                    <!-- Colored Location Text -->
+                                    <span class="text-xs text-violet-300 font-bold font-mono bg-violet-900/30 px-2 py-0.5 rounded"><i class="fas fa-map-marker-alt mr-1"></i> Salem, TN</span>
+                                </div>
+                                <h5 class="text-lg font-bold text-white">Higher Secondary (Computer Science)</h5>
+                                <p class="text-sm text-gray-400 mt-1">Paavendhar Matric Higher Secondary School</p>
+                                <div class="mt-3">
+                                    <span class="text-xs font-semibold text-purple-400 bg-purple-950/50 px-2.5 py-1 rounded-full border border-purple-800/40">Passed with: 87%</span>
+                                </div>
+                            </div>
                         </div>
-                        <h5 class="text-lg font-bold text-white">Higher Secondary (Computer Science)</h5>
-                        <p class="text-sm text-gray-400 mt-1">Paavendhar Matric Higher Secondary School</p>
-                        <div class="mt-3">
-                            <span class="text-xs font-semibold text-purple-400 bg-purple-950/50 px-2.5 py-1 rounded-full border border-purple-800/40">Passed with: 87%</span>
+                        
+                        <!-- Secondary Education -->
+                        <div class="relative pl-12 group">
+                            <div class="absolute left-3.5 top-1.5 flex items-center justify-center w-3.5 h-3.5 rounded-full bg-emerald-500 ring-4 ring-emerald-950/80 z-10 group-hover:scale-125 transition-transform duration-300"></div>
+                            <div class="glass-card p-5 sm:p-6 rounded-xl border border-emerald-500/20 hover:border-emerald-500/50 shadow-[0_0_15px_rgba(16,185,129,0.05)] hover:shadow-[0_0_25px_rgba(16,185,129,0.2)] transition-all duration-300">
+                                <div class="flex flex-wrap justify-between items-start gap-2 mb-2">
+                                    <span class="text-emerald-400 font-mono text-xs font-semibold px-2.5 py-1 bg-emerald-950/60 rounded border border-emerald-800/50">2020 - 2021</span>
+                                    <!-- Colored Location Text -->
+                                    <span class="text-xs text-emerald-300 font-bold font-mono bg-emerald-900/30 px-2 py-0.5 rounded"><i class="fas fa-map-marker-alt mr-1 text-emerald-400"></i> Salem, TN</span>
+                                </div>
+                                <h5 class="text-lg font-bold text-emerald-100 group-hover:text-emerald-400 transition-colors">Secondary School</h5>
+                                <p class="text-sm text-gray-400 mt-1">Paavendhar Matric Higher Secondary School</p>
+                                <div class="mt-3">
+                                    <span class="text-xs font-semibold text-emerald-400 bg-emerald-950/50 px-3 py-1.5 rounded-full border border-emerald-800/40 tracking-wider">Status: PASSED</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                
-                <!-- Secondary Education -->
-                <div class="relative pl-12 group">
-                    <div class="absolute left-3.5 top-1.5 flex items-center justify-center w-3.5 h-3.5 rounded-full bg-emerald-500 ring-4 ring-emerald-950/80 z-10 group-hover:scale-125 transition-transform duration-300"></div>
-                    <div class="glass-card p-6 rounded-xl border border-emerald-500/20 hover:border-emerald-500/50 shadow-[0_0_15px_rgba(16,185,129,0.05)] hover:shadow-[0_0_25px_rgba(16,185,129,0.2)] transition-all duration-300">
-                        <div class="flex flex-wrap justify-between items-start gap-2 mb-2">
-                            <span class="text-emerald-400 font-mono text-xs font-semibold px-2.5 py-1 bg-emerald-950/60 rounded border border-emerald-800/50">2020 - 2021</span>
-                            <span class="text-xs text-emerald-300 font-mono bg-emerald-950/40 px-2.5 py-1 rounded-md border border-emerald-800/40"><i class="fas fa-map-marker-alt text-emerald-400 mr-1"></i> Salem, TN</span>
-                        </div>
-                        <h5 class="text-lg font-bold text-emerald-100 group-hover:text-emerald-400 transition-colors">Secondary School</h5>
-                        <p class="text-sm text-gray-400 mt-1">Paavendhar Matric Higher Secondary School</p>
-                        <div class="mt-3">
-                            <span class="text-xs font-semibold text-emerald-400 bg-emerald-950/50 px-3 py-1.5 rounded-full border border-emerald-800/40 tracking-wider">Status: PASSED</span>
-                        </div>
-                    </div>
-                </div>
 
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="py-28 relative z-10 bg-black/40 border-y border-gray-900">
+    <section id="skills" class="py-20 sm:py-28 relative z-10 bg-black/40 border-y border-gray-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-20 reveal">
+            <div class="text-center mb-16 sm:mb-20 reveal">
                 <h2 class="text-sm text-sky-400 font-mono tracking-widest uppercase mb-2">Stack Proficiency</h2>
                 <h3 class="text-3xl md:text-5xl font-bold">Technical Skills</h3>
                 <div class="w-24 h-1.5 bg-gradient-to-r from-sky-500 via-indigo-500 to-violet-500 mx-auto mt-4 rounded-full"></div>
@@ -431,7 +429,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Programming Languages -->
-                <div class="glass-card p-8 rounded-2xl reveal relative overflow-hidden group">
+                <div class="glass-card p-6 sm:p-8 rounded-2xl reveal relative overflow-hidden group">
                     <div class="absolute top-0 right-0 w-24 h-24 bg-sky-500/5 rounded-full blur-xl group-hover:bg-sky-500/10 transition-all"></div>
                     <h4 class="text-xl font-bold mb-6 flex items-center gap-3"><i class="fas fa-code text-sky-400"></i> Languages</h4>
                     <div class="space-y-4">
@@ -445,7 +443,7 @@
                 </div>
 
                 <!-- Tools & Platforms -->
-                <div class="glass-card p-8 rounded-2xl reveal relative overflow-hidden group" style="transition-delay: 100ms;">
+                <div class="glass-card p-6 sm:p-8 rounded-2xl reveal relative overflow-hidden group" style="transition-delay: 100ms;">
                     <div class="absolute top-0 right-0 w-24 h-24 bg-violet-500/5 rounded-full blur-xl group-hover:bg-violet-500/10 transition-all"></div>
                     <h4 class="text-xl font-bold mb-6 flex items-center gap-3"><i class="fas fa-tools text-purple-400"></i> Tools</h4>
                     <div class="space-y-4">
@@ -457,7 +455,7 @@
                 </div>
 
                 <!-- Database, Cloud & Management -->
-                <div class="glass-card p-8 rounded-2xl reveal relative overflow-hidden group" style="transition-delay: 200ms;">
+                <div class="glass-card p-6 sm:p-8 rounded-2xl reveal relative overflow-hidden group" style="transition-delay: 200ms;">
                     <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-xl group-hover:bg-emerald-500/10 transition-all"></div>
                     <h4 class="text-xl font-bold mb-6 flex items-center gap-3"><i class="fas fa-cloud text-green-400"></i> DB & Cloud Platforms</h4>
                     <div class="space-y-4">
@@ -474,9 +472,9 @@
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="py-28 relative z-10">
+    <section id="projects" class="py-20 sm:py-28 relative z-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-20 reveal">
+            <div class="text-center mb-16 sm:mb-20 reveal">
                 <h2 class="text-sm text-sky-400 font-mono tracking-widest uppercase mb-2">My Engineering Work</h2>
                 <h3 class="text-3xl md:text-5xl font-bold">Featured Projects</h3>
                 <div class="w-24 h-1.5 bg-gradient-to-r from-sky-500 via-indigo-500 to-violet-500 mx-auto mt-4 rounded-full"></div>
@@ -485,17 +483,17 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
                 <!-- Project 1: Cricscore365 -->
                 <div class="glass-card rounded-2xl overflow-hidden reveal group flex flex-col h-full border border-gray-800/80">
-                    <div class="h-52 bg-gradient-to-br from-slate-900 via-[#0d1527] to-black relative overflow-hidden flex items-center justify-center border-b border-gray-800">
+                    <div class="h-48 sm:h-52 bg-gradient-to-br from-slate-900 via-[#0d1527] to-black relative overflow-hidden flex items-center justify-center border-b border-gray-800">
                         <div class="absolute inset-0 opacity-20 group-hover:opacity-35 transition-opacity duration-500 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-sky-500 via-transparent to-black"></div>
                         <div class="relative flex items-center justify-center gap-4 text-sky-400 transition-transform duration-500 group-hover:scale-105">
-                            <i class="fas fa-baseball-bat-ball text-7xl text-gradient"></i>
+                            <i class="fas fa-baseball-bat-ball text-6xl sm:text-7xl text-gradient"></i>
                         </div>
                         <div class="absolute top-4 right-4 bg-emerald-950/70 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-mono text-emerald-400 border border-emerald-500/20 flex items-center gap-1.5">
-                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Live Production
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Live
                         </div>
                     </div>
                     
-                    <div class="p-8 flex flex-col flex-grow">
+                    <div class="p-6 sm:p-8 flex flex-col flex-grow">
                         <h4 class="text-2xl font-bold mb-1 text-white group-hover:text-sky-400 transition-colors">Cricscore365</h4>
                         <p class="text-xs text-sky-400 font-mono mb-4">Cricket Tournament Scoring & Management Web Application</p>
                         
@@ -507,7 +505,7 @@
                             <span class="text-xs px-2.5 py-1.5 bg-slate-900/80 rounded-lg border border-gray-850 text-gray-300 font-mono">JavaScript</span>
                             <span class="text-xs px-2.5 py-1.5 bg-slate-900/80 rounded-lg border border-gray-850 text-gray-300 font-mono">HTML5 / CSS3</span>
                             <span class="text-xs px-2.5 py-1.5 bg-slate-900/80 rounded-lg border border-gray-850 text-gray-300 font-mono">LocalStorage</span>
-                            <span class="text-xs px-2.5 py-1.5 bg-slate-900/80 rounded-lg border border-gray-850 text-gray-300 font-mono">Vercel Deployment</span>
+                            <span class="text-xs px-2.5 py-1.5 bg-slate-900/80 rounded-lg border border-gray-850 text-gray-300 font-mono">Vercel</span>
                         </div>
                         
                         <div class="mt-auto">
@@ -520,17 +518,17 @@
 
                 <!-- Project 2: Ungal Nanban -->
                 <div class="glass-card rounded-2xl overflow-hidden reveal group flex flex-col h-full border border-gray-800/80" style="transition-delay: 100ms;">
-                    <div class="h-52 bg-gradient-to-br from-slate-900 via-[#150f24] to-black relative overflow-hidden flex items-center justify-center border-b border-gray-800">
+                    <div class="h-48 sm:h-52 bg-gradient-to-br from-slate-900 via-[#150f24] to-black relative overflow-hidden flex items-center justify-center border-b border-gray-800">
                         <div class="absolute inset-0 opacity-20 group-hover:opacity-35 transition-opacity duration-500 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-violet-500 via-transparent to-black"></div>
                         <div class="relative flex items-center justify-center gap-4 text-violet-400 transition-transform duration-500 group-hover:scale-105">
-                            <i class="fas fa-bullhorn text-7xl text-gradient"></i>
+                            <i class="fas fa-bullhorn text-6xl sm:text-7xl text-gradient"></i>
                         </div>
                         <div class="absolute top-4 right-4 bg-emerald-950/70 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-mono text-emerald-400 border border-emerald-500/20 flex items-center gap-1.5">
-                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Live Production
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Live
                         </div>
                     </div>
                     
-                    <div class="p-8 flex flex-col flex-grow">
+                    <div class="p-6 sm:p-8 flex flex-col flex-grow">
                         <h4 class="text-2xl font-bold mb-1 text-white group-hover:text-violet-400 transition-colors">Ungal Nanban</h4>
                         <p class="text-xs text-violet-400 font-mono mb-4">Civic Issue Tracker & Community Communication System</p>
                         
@@ -540,9 +538,9 @@
                         
                         <div class="flex flex-wrap gap-2 mb-8">
                             <span class="text-xs px-2.5 py-1.5 bg-slate-900/80 rounded-lg border border-gray-850 text-gray-300 font-mono">Firebase DB</span>
-                            <span class="text-xs px-2.5 py-1.5 bg-slate-900/80 rounded-lg border border-gray-850 text-gray-300 font-mono">Cloudinary Cloud</span>
+                            <span class="text-xs px-2.5 py-1.5 bg-slate-900/80 rounded-lg border border-gray-850 text-gray-300 font-mono">Cloudinary</span>
                             <span class="text-xs px-2.5 py-1.5 bg-slate-900/80 rounded-lg border border-gray-850 text-gray-300 font-mono">JavaScript</span>
-                            <span class="text-xs px-2.5 py-1.5 bg-slate-900/80 rounded-lg border border-gray-850 text-gray-300 font-mono">Vercel Deployment</span>
+                            <span class="text-xs px-2.5 py-1.5 bg-slate-900/80 rounded-lg border border-gray-850 text-gray-300 font-mono">Vercel</span>
                         </div>
                         
                         <div class="mt-auto">
@@ -557,7 +555,7 @@
     </section>
 
     <!-- Experience, Certifications & Achievements -->
-    <section id="certifications" class="py-28 relative z-10 bg-black/40 border-t border-gray-950">
+    <section id="certifications" class="py-20 sm:py-28 relative z-10 bg-black/40 border-t border-gray-950">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
                 
@@ -664,21 +662,21 @@
                         </div>
                     </div>
 
-                    <!-- Directory CTA -->
-                    <div class="p-6 bg-gradient-to-tr from-[#111827] to-[#0a0f1d] border border-violet-500/20 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 shadow-[0_4px_25px_rgba(139,92,246,0.1)]">
-                        <div>
+                    <!-- Directory CTA (Fixed for Mobile) -->
+                    <div class="p-5 sm:p-6 bg-gradient-to-tr from-[#111827] to-[#0a0f1d] border border-violet-500/20 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 shadow-[0_4px_25px_rgba(139,92,246,0.1)] text-center sm:text-left">
+                        <div class="w-full sm:w-auto">
                             <h4 class="font-bold text-white text-sm sm:text-base">Verify All Certifications</h4>
                             <p class="text-xs text-gray-400 mt-1">Access my cloud directory containing all original PDF certificates.</p>
                         </div>
-                        <a href="https://drive.google.com/drive/folders/1Kv88unczLpcWc54kC6TpGQidxAOgDvkz" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto justify-center px-5 py-3 bg-gradient-to-r from-violet-600 to-sky-500 hover:from-violet-500 hover:to-sky-400 text-white font-semibold text-xs sm:text-sm rounded-xl transition-all shadow-[0_4px_15px_rgba(139,92,246,0.2)] flex items-center gap-2 transform hover:scale-[1.02] shimmer-btn text-center leading-tight">
-                            <i class="fab fa-google-drive"></i> Open Google Drive Folder
+                        <a href="https://drive.google.com/drive/folders/1Kv88unczLpcWc54kC6TpGQidxAOgDvkz" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto justify-center px-5 py-3 sm:py-2.5 bg-gradient-to-r from-violet-600 to-sky-500 hover:from-violet-500 hover:to-sky-400 text-white font-semibold text-xs sm:text-sm rounded-xl transition-all shadow-[0_4px_15px_rgba(139,92,246,0.2)] flex items-center gap-2 transform hover:scale-[1.02] shimmer-btn">
+                            <i class="fab fa-google-drive text-base"></i> Open Google Drive Folder
                         </a>
                     </div>
 
                     <!-- Spoken Languages -->
                     <div class="pt-6 border-t border-gray-800">
                         <h4 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fas fa-language text-sky-400"></i> Languages Known</h4>
-                        <div class="flex gap-4">
+                        <div class="flex flex-wrap gap-4">
                             <div class="px-4 py-2.5 bg-slate-900/60 rounded-xl border border-gray-800 font-medium text-white flex items-center gap-2">
                                 <span class="w-2.5 h-2.5 rounded-full bg-sky-400"></span> English
                             </div>
@@ -693,8 +691,8 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-28 relative z-10 overflow-hidden">
+    <!-- Contact & Footer -->
+    <section id="contact" class="py-20 sm:py-28 relative z-10 overflow-hidden">
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_bottom,_var(--tw-gradient-stops))] from-sky-950/20 via-transparent to-transparent pointer-events-none"></div>
         
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal">
@@ -704,11 +702,11 @@
                 I am actively seeking professional opportunities, internship assignments, and collaborative open-source developer associations. Let's build something exceptional!
             </p>
             
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto mb-14 text-left">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto mb-14 text-left">
                 <!-- Email Card -->
                 <a href="mailto:omprakashtamilarasan@gmail.com" class="glass-card p-6 rounded-2xl flex flex-col items-center text-center group">
-                    <div class="w-14 h-14 bg-slate-900 rounded-full flex items-center justify-center mb-4 group-hover:bg-red-500/15 transition-colors border border-gray-800 group-hover:border-red-500/40">
-                        <i class="fas fa-envelope text-xl text-gray-400 group-hover:text-red-400"></i>
+                    <div class="w-14 h-14 bg-[#ea4335]/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-[#ea4335]/20 transition-colors border border-[#ea4335]/20 group-hover:border-[#ea4335]/50 shadow-[0_0_15px_rgba(234,67,53,0.1)] group-hover:shadow-[0_0_20px_rgba(234,67,53,0.3)]">
+                        <i class="fas fa-envelope text-2xl text-[#ea4335] group-hover:scale-110 transition-transform drop-shadow-[0_0_8px_rgba(234,67,53,0.4)]"></i>
                     </div>
                     <span class="text-xs font-mono text-gray-500 uppercase tracking-wider mb-1">Email Me</span>
                     <span class="text-sm font-semibold text-gray-200 group-hover:text-sky-400 transition-colors break-all">omprakashtamilarasan@gmail.com</span>
@@ -716,8 +714,8 @@
                 
                 <!-- Phone Card -->
                 <a href="tel:+919025414413" class="glass-card p-6 rounded-2xl flex flex-col items-center text-center group">
-                    <div class="w-14 h-14 bg-slate-900 rounded-full flex items-center justify-center mb-4 group-hover:bg-emerald-500/15 transition-colors border border-gray-800 group-hover:border-emerald-500/40">
-                        <i class="fas fa-phone-alt text-xl text-gray-400 group-hover:text-emerald-400"></i>
+                    <div class="w-14 h-14 bg-[#10b981]/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-[#10b981]/20 transition-colors border border-[#10b981]/20 group-hover:border-[#10b981]/50 shadow-[0_0_15px_rgba(16,185,129,0.1)] group-hover:shadow-[0_0_20px_rgba(16,185,129,0.3)]">
+                        <i class="fas fa-phone-alt text-2xl text-[#10b981] group-hover:scale-110 transition-transform drop-shadow-[0_0_8px_rgba(16,185,129,0.4)]"></i>
                     </div>
                     <span class="text-xs font-mono text-gray-500 uppercase tracking-wider mb-1">Call Phone</span>
                     <span class="text-sm font-semibold text-gray-200 group-hover:text-sky-400 transition-colors">+91 9025414413</span>
@@ -725,37 +723,50 @@
 
                 <!-- LinkedIn Card -->
                 <a href="https://www.linkedin.com/in/omprakash-t-b28543358" target="_blank" rel="noopener noreferrer" class="glass-card p-6 rounded-2xl flex flex-col items-center text-center group">
-                    <div class="w-14 h-14 bg-slate-900 rounded-full flex items-center justify-center mb-4 group-hover:bg-blue-500/15 transition-colors border border-gray-800 group-hover:border-blue-500/40">
-                        <i class="fab fa-linkedin-in text-xl text-gray-400 group-hover:text-blue-400"></i>
+                    <div class="w-14 h-14 bg-[#0a66c2]/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-[#0a66c2]/20 transition-colors border border-[#0a66c2]/20 group-hover:border-[#0a66c2]/50 shadow-[0_0_15px_rgba(10,102,194,0.1)] group-hover:shadow-[0_0_20px_rgba(10,102,194,0.3)]">
+                        <i class="fab fa-linkedin-in text-2xl text-[#0a66c2] group-hover:scale-110 transition-transform drop-shadow-[0_0_8px_rgba(10,102,194,0.4)]"></i>
                     </div>
                     <span class="text-xs font-mono text-gray-500 uppercase tracking-wider mb-1">LinkedIn Connection</span>
                     <span class="text-sm font-semibold text-gray-200 group-hover:text-sky-400 transition-colors">Connect on LinkedIn</span>
                 </a>
+
+                <!-- WhatsApp Card -->
+                <a href="https://wa.me/919025414413?text=Hello%20Omprakash" target="_blank" rel="noopener noreferrer" class="glass-card p-6 rounded-2xl flex flex-col items-center text-center group">
+                    <div class="w-14 h-14 bg-[#25d366]/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-[#25d366]/20 transition-colors border border-[#25d366]/20 group-hover:border-[#25d366]/50 shadow-[0_0_15px_rgba(37,211,102,0.1)] group-hover:shadow-[0_0_20px_rgba(37,211,102,0.3)]">
+                        <i class="fab fa-whatsapp text-2xl text-[#25d366] group-hover:scale-110 transition-transform drop-shadow-[0_0_8px_rgba(37,211,102,0.4)]"></i>
+                    </div>
+                    <span class="text-xs font-mono text-gray-500 uppercase tracking-wider mb-1">WhatsApp Chat</span>
+                    <span class="text-sm font-semibold text-gray-200 group-hover:text-sky-400 transition-colors">+91 9025414413</span>
+                </a>
             </div>
             
-            <a href="mailto:omprakashtamilarasan@gmail.com" class="inline-flex items-center gap-2.5 bg-gradient-to-r from-sky-600 to-violet-600 hover:from-sky-500 hover:to-violet-500 text-white font-bold py-4.5 px-11 rounded-full transition-all transform hover:scale-105 shadow-[0_0_25px_rgba(139,92,246,0.35)] hover:shadow-[0_0_35px_rgba(139,92,246,0.55)] text-base sm:text-lg shimmer-btn">
+            <button id="open-contact-modal" class="inline-flex items-center gap-2.5 bg-gradient-to-r from-sky-600 to-violet-600 hover:from-sky-500 hover:to-violet-500 text-white font-bold py-4 px-11 rounded-full transition-all transform hover:scale-105 shadow-[0_0_25px_rgba(139,92,246,0.35)] hover:shadow-[0_0_35px_rgba(139,92,246,0.55)] text-base sm:text-lg shimmer-btn mx-auto">
                 Send Direct Message <i class="far fa-paper-plane text-sm"></i>
-            </a>
+            </button>
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="border-t border-gray-900 py-12 relative z-10 glass">
         <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
-            <div class="flex items-center justify-center md:justify-start gap-4">
-                <div class="w-12 h-16 rounded-lg overflow-hidden border border-sky-500/40 bg-black relative flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(14,165,233,0.15)]">
-                    <span id="footer-avatar-fallback" class="text-sky-300 font-bold font-poppins text-sm hidden absolute inset-0 items-center justify-center">OT</span>
-                    <img id="footer-profile-pic" class="w-full h-full object-cover object-top opacity-0 transition-transform duration-500 hover:scale-110 relative z-10" alt="Omprakash T">
+            <div class="flex items-center gap-4 flex-col sm:flex-row">
+                <!-- Footer 3D Passport style small image -->
+                <div class="w-[60px] h-[80px] bg-gradient-to-br from-sky-400 via-violet-500 to-purple-600 p-[2px] rounded-xl shadow-[0_0_15px_rgba(14,165,233,0.3)]">
+                    <div class="w-full h-full bg-black rounded-lg overflow-hidden flex flex-col items-center justify-center">
+                        <img id="footer-pic" class="w-full h-full object-cover object-top opacity-0 transition-opacity duration-700" alt="Omprakash T">
+                    </div>
                 </div>
                 <div>
                     <p class="text-white font-bold text-lg">Omprakash T</p>
                     <p class="text-xs text-gray-500 mt-1">B.Tech IT | MERN Stack Developer | Engineer</p>
                 </div>
             </div>
+            
             <div class="flex gap-4">
-                <a href="https://github.com/omprakashthiruselvi" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-white transition-colors text-lg" title="GitHub"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/omprakash-t-b28543358" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-sky-400 transition-colors text-lg" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                <a href="mailto:omprakashtamilarasan@gmail.com" class="text-gray-500 hover:text-red-400 transition-colors text-lg" title="Email"><i class="fas fa-envelope"></i></a>
+                <a href="https://github.com/omprakashthiruselvi" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-white hover:-translate-y-1 transition-all text-2xl drop-shadow-[0_0_5px_rgba(255,255,255,0.2)]" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/omprakash-t-b28543358" target="_blank" rel="noopener noreferrer" class="text-[#0a66c2] hover:text-[#50a0f0] hover:-translate-y-1 transition-all text-2xl drop-shadow-[0_0_5px_rgba(10,102,194,0.4)]" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:omprakashtamilarasan@gmail.com" class="text-[#ea4335] hover:text-[#f07066] hover:-translate-y-1 transition-all text-2xl drop-shadow-[0_0_5px_rgba(234,67,53,0.4)]" title="Email"><i class="fas fa-envelope"></i></a>
+                <a href="https://wa.me/919025414413?text=Hello%20Omprakash" target="_blank" rel="noopener noreferrer" class="text-[#25d366] hover:text-[#4ade80] hover:-translate-y-1 transition-all text-2xl drop-shadow-[0_0_5px_rgba(37,211,102,0.4)]" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
             </div>
             <div>
                 <p class="text-gray-500 text-xs">
@@ -765,16 +776,82 @@
         </div>
     </footer>
 
+    <!-- Contact Options Modal -->
+    <div id="contact-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center opacity-0 transition-opacity duration-300">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-md close-modal cursor-pointer"></div>
+        <div class="relative w-full max-w-lg mx-4 glass-card p-6 sm:p-8 rounded-3xl shadow-2xl transform scale-95 transition-transform duration-300" id="modal-content">
+            <div class="flex justify-between items-center mb-6 border-b border-gray-800 pb-4">
+                <div>
+                    <h3 class="text-2xl font-bold text-white">Let's Connect</h3>
+                    <p class="text-sm text-gray-400 mt-1">Choose how you'd like to reach me</p>
+                </div>
+                <button class="close-modal text-gray-400 hover:text-white transition-colors w-10 h-10 rounded-full bg-slate-900/50 hover:bg-slate-800 flex items-center justify-center text-xl border border-gray-800"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <a href="https://wa.me/919025414413?text=Hello%20Omprakash" target="_blank" class="flex flex-col items-center text-center p-5 bg-slate-900/80 hover:bg-[#25d366]/10 border border-slate-800 hover:border-[#25d366]/50 rounded-2xl transition-all group">
+                    <div class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center text-[#25d366] text-2xl mb-3 group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(37,211,102,0.2)]"><i class="fab fa-whatsapp"></i></div>
+                    <h4 class="text-white font-bold text-base">WhatsApp</h4>
+                    <p class="text-gray-400 text-xs mt-1">Direct chat</p>
+                </a>
+                
+                <a href="mailto:omprakashtamilarasan@gmail.com" class="flex flex-col items-center text-center p-5 bg-slate-900/80 hover:bg-[#ea4335]/10 border border-slate-800 hover:border-[#ea4335]/50 rounded-2xl transition-all group">
+                    <div class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center text-[#ea4335] text-2xl mb-3 group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(234,67,53,0.2)]"><i class="fas fa-envelope"></i></div>
+                    <h4 class="text-white font-bold text-base">E-mail</h4>
+                    <p class="text-gray-400 text-xs mt-1">Formal inquiries</p>
+                </a>
+                
+                <a href="https://www.linkedin.com/in/omprakash-t-b28543358" target="_blank" class="flex flex-col items-center text-center p-5 bg-slate-900/80 hover:bg-[#0a66c2]/10 border border-slate-800 hover:border-[#0a66c2]/50 rounded-2xl transition-all group">
+                    <div class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center text-[#0a66c2] text-2xl mb-3 group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(10,102,194,0.2)]"><i class="fab fa-linkedin-in"></i></div>
+                    <h4 class="text-white font-bold text-base">LinkedIn</h4>
+                    <p class="text-gray-400 text-xs mt-1">Professional network</p>
+                </a>
+                
+                <a href="tel:+919025414413" class="flex flex-col items-center text-center p-5 bg-slate-900/80 hover:bg-[#10b981]/10 border border-slate-800 hover:border-[#10b981]/50 rounded-2xl transition-all group">
+                    <div class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center text-[#10b981] text-xl mb-3 group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(16,185,129,0.2)]"><i class="fas fa-phone-alt"></i></div>
+                    <h4 class="text-white font-bold text-base">Phone Call</h4>
+                    <p class="text-gray-400 text-xs mt-1">Urgent matters</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts section -->
     <script>
-        // --- STREAMING_CHUNK: Activating scroll animations, navigation and interactive logic... ---
         
+        // --- STREAMING_CHUNK: Activating Modal Logic... ---
+        const modal = document.getElementById('contact-modal');
+        const openModalBtn = document.getElementById('open-contact-modal');
+        const closeModalBtns = document.querySelectorAll('.close-modal');
+        const modalContent = document.getElementById('modal-content');
+
+        if(openModalBtn && modal) {
+            openModalBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                modal.classList.remove('hidden');
+                // Trigger reflow to ensure CSS transitions execute
+                void modal.offsetWidth;
+                modal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            });
+
+            closeModalBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    modal.classList.add('opacity-0');
+                    modalContent.classList.remove('scale-100');
+                    modalContent.classList.add('scale-95');
+                    setTimeout(() => {
+                        modal.classList.add('hidden');
+                    }, 300); // Wait for transition duration
+                });
+            });
+        }
+
         // Dynamic profile image loader with a smart waterfall fallback
         const profileImageElement = document.getElementById('profile-pic');
+        const footerImageElement = document.getElementById('footer-pic');
         const fallbackAvatarElement = document.getElementById('avatar-fallback');
-        
-        const footerImageElement = document.getElementById('footer-profile-pic');
-        const footerFallbackElement = document.getElementById('footer-avatar-fallback');
         
         // Cascade list of potential source targets for your photo
         const profilePhotoSources = [
@@ -787,32 +864,20 @@
             if (currentPhotoIndex < profilePhotoSources.length) {
                 const nextUrl = profilePhotoSources[currentPhotoIndex];
                 profileImageElement.src = nextUrl;
-                if(footerImageElement) footerImageElement.src = nextUrl;
+                footerImageElement.src = nextUrl;
             } else {
-                // If all URLs fail, fallback to the stylized custom vector avatar
                 profileImageElement.classList.add('hidden');
+                footerImageElement.parentElement.classList.add('hidden');
                 fallbackAvatarElement.classList.remove('hidden');
-                if(footerImageElement) footerImageElement.classList.add('hidden');
-                if(footerFallbackElement) {
-                    footerFallbackElement.classList.remove('hidden');
-                    footerFallbackElement.classList.add('flex');
-                }
             }
         }
 
         profileImageElement.addEventListener('load', () => {
-            profileImageElement.classList.remove('opacity-0', 'scale-95', 'hidden');
-            profileImageElement.classList.add('opacity-100', 'scale-100');
-            fallbackAvatarElement.classList.add('hidden'); // Ensure fallback hides if successful
-            
-            if(footerImageElement) {
-                footerImageElement.classList.remove('opacity-0', 'hidden');
-                footerImageElement.classList.add('opacity-100');
-            }
-            if(footerFallbackElement) {
-                footerFallbackElement.classList.add('hidden');
-                footerFallbackElement.classList.remove('flex');
-            }
+            profileImageElement.classList.remove('opacity-0');
+            profileImageElement.classList.add('opacity-100');
+            footerImageElement.classList.remove('opacity-0');
+            footerImageElement.classList.add('opacity-100');
+            fallbackAvatarElement.classList.add('hidden'); 
         });
 
         profileImageElement.addEventListener('error', () => {
@@ -820,8 +885,8 @@
             loadProfileImage();
         });
 
-        // Trigger the loading stream
         loadProfileImage();
+
 
         // Mobile Menu Toggle
         const btn = document.getElementById('mobile-menu-btn');
@@ -842,10 +907,10 @@
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 40) {
-                navbar.classList.add('shadow-xl', 'bg-slate-950/90', 'border-b', 'border-gray-900');
+                navbar.classList.add('shadow-xl', 'navbar-scrolled', 'bg-slate-950/90', 'border-b', 'border-gray-900');
                 navbar.classList.remove('border-b-transparent');
             } else {
-                navbar.classList.remove('shadow-xl', 'bg-slate-950/90', 'border-b', 'border-gray-900');
+                navbar.classList.remove('shadow-xl', 'navbar-scrolled', 'bg-slate-950/90', 'border-b', 'border-gray-900');
                 navbar.classList.add('border-b-transparent');
             }
         });
@@ -888,7 +953,20 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-        // Create Animated Particle Grid system
+        // --- STREAMING_CHUNK: Building 3D Background Environment... ---
+        
+        // Lighting for 3D geometric shapes
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.9);
+        directionalLight.position.set(20, 50, 30);
+        scene.add(directionalLight);
+
+        // Group 1: Dark Mode Particle Environment
+        const darkGroup = new THREE.Group();
+        scene.add(darkGroup);
+
         const particleGeometry = new THREE.BufferGeometry();
         const particleCount = 1800;
         
@@ -899,12 +977,10 @@
         const colorSecondary = new THREE.Color(0x8b5cf6); // Violet Accent
 
         for (let i = 0; i < particleCount * 3; i += 3) {
-            // Grid spread variables
-            posArray[i] = (Math.random() - 0.5) * 160;     // X axis range
-            posArray[i + 1] = (Math.random() - 0.5) * 12;  // Y axis initial heights
-            posArray[i + 2] = (Math.random() - 0.5) * 160; // Z axis deep grid
+            posArray[i] = (Math.random() - 0.5) * 160;     
+            posArray[i + 1] = (Math.random() - 0.5) * 12;  
+            posArray[i + 2] = (Math.random() - 0.5) * 160; 
 
-            // Gradient Mix calculation
             const mixedColor = colorPrimary.clone().lerp(colorSecondary, Math.random());
             colorsArray[i] = mixedColor.r;
             colorsArray[i + 1] = mixedColor.g;
@@ -923,9 +999,8 @@
         });
 
         const particleMesh = new THREE.Points(particleGeometry, particleMaterial);
-        scene.add(particleMesh);
+        darkGroup.add(particleMesh);
 
-        // Add 3D structural outline depth element
         const wireframeGeometry = new THREE.IcosahedronGeometry(25, 1);
         const wireframeMaterial = new THREE.MeshBasicMaterial({ 
             color: 0x8b5cf6, 
@@ -935,7 +1010,7 @@
         });
         const wireframeMesh = new THREE.Mesh(wireframeGeometry, wireframeMaterial);
         wireframeMesh.position.set(30, -5, -30);
-        scene.add(wireframeMesh);
+        darkGroup.add(wireframeMesh);
 
         // Mouse Parallax Trackers
         let mouseX = 0;
@@ -970,30 +1045,26 @@
             requestAnimationFrame(animate);
             const elapsedTime = clock.getElapsedTime();
 
-            // Smooth Interpolation calculation
             targetX = mouseX * 0.0008;
             targetY = mouseY * 0.0008;
             
-            // Apply coordinates rotation physics
+            // Render Particle Waves Logic
             particleMesh.rotation.y += 0.0008 + (targetX - particleMesh.rotation.y) * 0.04;
             particleMesh.rotation.x += (targetY - particleMesh.rotation.x) * 0.04;
 
             wireframeMesh.rotation.x += 0.0008;
             wireframeMesh.rotation.y += 0.0015;
 
-            // Wave dynamic mathematical logic
             const positions = particleGeometry.attributes.position.array;
             for (let i = 0; i < particleCount; i++) {
                 const i3 = i * 3;
                 const x = positions[i3];
                 const z = positions[i3 + 2];
-                // Y-axis height wave calculation based on cosine-sine values over elapsed state
                 positions[i3 + 1] = Math.sin(elapsedTime * 0.4 + x * 0.04) * 2.8 + 
                                     Math.cos(elapsedTime * 0.25 + z * 0.04) * 2.8;
             }
             particleGeometry.attributes.position.needsUpdate = true;
 
-            // Scroll Parallax Adaptor
             const scrollY = window.scrollY;
             camera.position.y = 12 - (scrollY * 0.004);
             camera.position.z = 52 - (scrollY * 0.008);
@@ -1001,7 +1072,6 @@
             renderer.render(scene, camera);
         }
 
-        // Window load trigger
         window.onload = function() {
             animate();
         };
